@@ -1,6 +1,16 @@
-import { isDate } from "util/types";
+import { AppProps } from "next/app";
+import { globalStyles } from "../styles/global";
+import Image from "next/image";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+globalStyles();
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <div>
+      <header>
+        <Image src="" alt="" />
+      </header>
+      <Component {...pageProps} />
+    </div>
+  );
 }
-export default MyApp;
