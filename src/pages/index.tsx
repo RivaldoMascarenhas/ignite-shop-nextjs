@@ -1,24 +1,42 @@
-import { styled } from "../styles";
+import Image from "next/image";
+import { HomeContainer, Product } from "../styles/pages/home";
 
-const Button = styled("button", {
-  background: "$green300",
-  borderRadius: 4,
-  border: 0,
-  padding: "0.5rem 1rem",
-  display: "flex",
-  gap: "2rem",
-  span: {
-    color: "White",
-  },
-  "&:hover": {
-    filter: "brightness(0.8)",
-  },
-});
+import shirt1 from "../assets/shirts/Shirt-1.png";
+import shirt2 from "../assets/shirts/Shirt-2.png";
+import shirt3 from "../assets/shirts/Shirt-3.png";
+import shirt4 from "../assets/shirts/Shirt-4.png";
+
 export default function Home() {
   return (
-    <Button>
-      <span>Rivaldo</span>
-      enviar!!
-    </Button>
+    <HomeContainer>
+      <Product>
+        <Image src={shirt1} width={520} height={480} alt="" />
+        <footer>
+          <strong>Camiseta X</strong>
+          <span>R$ 79,90</span>
+        </footer>
+      </Product>
+      <Product>
+        <Image src={shirt2} width={520} height={480} alt="" />
+        <footer>
+          <strong>Camiseta Y</strong>
+          <span>R$ 79,90</span>
+        </footer>
+      </Product>
+      <Product>
+        <Image src={shirt3} width={520} height={480} alt="" />
+        <footer>
+          <strong>Camiseta Y</strong>
+          <span>R$ 79,90</span>
+        </footer>
+      </Product>
+      <Product>
+        <Image src={shirt4} width={520} height={480} alt="" />
+        <footer>
+          <strong>Camiseta Y</strong>
+          <span>R$ 79,90</span>
+        </footer>
+      </Product>
+    </HomeContainer>
   );
 }
