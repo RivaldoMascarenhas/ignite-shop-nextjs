@@ -56,7 +56,7 @@ export const Product = styled("a", {
       opacity: 1,
     },
     img: {
-      transform: "scale(110%)",
+      transform: "scale(98%)",
     },
   },
 });
