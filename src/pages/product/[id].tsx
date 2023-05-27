@@ -23,18 +23,16 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const router = useRouter();
   async function handleBuyProduct() {
     try {
       const response = await axios.post("/api/checkout", {
         priceID: product.defaultPriceID,
       });
       const { checkoutUrl } = response.data;
-      // router.push(checkoutUrl);
       window.location.href = checkoutUrl;
     } catch (err) {
       //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
-      alert("Falha ai redirecionar ao checkout!");
+      alert("Falha em redirecionar ao checkout!");
     }
   }
   const { isFallback } = useRouter();
