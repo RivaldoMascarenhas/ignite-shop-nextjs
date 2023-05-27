@@ -8,6 +8,9 @@ import {
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import handler from "../api/checkout";
+import axios from "axios";
+
 interface ProductProps {
   product: {
     id: string;
@@ -15,10 +18,25 @@ interface ProductProps {
     imageURL: string;
     price: string;
     description: string;
+    defaultPriceID: string;
   };
 }
 
 export default function Product({ product }: ProductProps) {
+  const router = useRouter();
+  async function handleBuyProduct() {
+    try {
+      const response = await axios.post("/api/checkout", {
+        priceID: product.defaultPriceID,
+      });
+      const { checkoutUrl } = response.data;
+      // router.push(checkoutUrl);
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
+      alert("Falha ai redirecionar ao checkout!");
+    }
+  }
   const { isFallback } = useRouter();
 
   if (isFallback) {
@@ -34,11 +52,12 @@ export default function Product({ product }: ProductProps) {
         <h1>{product.name}</h1>
         <span>{product.price}</span>
         <p>{product.description}</p>
-        <button>Comprar agora</button>
+        <button onClick={handleBuyProduct}>Comprar agora</button>
       </ProductDetails>
     </ProductContainer>
   );
 }
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [{ params: { id: "prod_Nudcm69NDdk2HJ" } }],
@@ -67,6 +86,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
           currency: "BRL",
         }).format(price.unit_amount / 100),
         description: product.description,
+        defaultPriceID: price.id,
       },
     },
     revalidate: 60 * 60 * 1, //1 hour
