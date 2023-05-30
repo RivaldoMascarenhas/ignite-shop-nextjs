@@ -8,8 +8,8 @@ import {
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import handler from "../api/checkout";
 import axios from "axios";
+import { useState } from "react";
 
 interface ProductProps {
   product: {
@@ -23,22 +23,22 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+
   async function handleBuyProduct() {
     try {
+      setIsCreatingCheckoutSession(true);
       const response = await axios.post("/api/checkout", {
-        priceID: product.defaultPriceID,
+        priceId: product.defaultPriceID,
       });
       const { checkoutUrl } = response.data;
       window.location.href = checkoutUrl;
     } catch (err) {
       //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
+      setIsCreatingCheckoutSession(false);
       alert("Falha em redirecionar ao checkout!");
     }
-  }
-  const { isFallback } = useRouter();
-
-  if (isFallback) {
-    return <p>Loading...</p>;
   }
 
   return (
@@ -50,7 +50,9 @@ export default function Product({ product }: ProductProps) {
         <h1>{product.name}</h1>
         <span>{product.price}</span>
         <p>{product.description}</p>
-        <button onClick={handleBuyProduct}>Comprar agora</button>
+        <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
+          Comprar agora
+        </button>
       </ProductDetails>
     </ProductContainer>
   );
