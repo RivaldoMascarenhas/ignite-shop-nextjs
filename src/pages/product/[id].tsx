@@ -7,7 +7,6 @@ import {
 } from "../../styles/pages/product";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { useState } from "react";
 
@@ -60,7 +59,7 @@ export default function Product({ product }: ProductProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { id: "prod_Nudcm69NDdk2HJ" } }],
+    paths: [{ params: { id: "" } }],
     fallback: true,
   };
 };
