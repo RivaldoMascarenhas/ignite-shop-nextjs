@@ -39,11 +39,19 @@ export default function Product({ product }: ProductProps) {
       alert("Falha em redirecionar ao checkout!");
     }
   }
-
+  if (!product) {
+    return <div>loading</div>;
+  }
   return (
     <ProductContainer>
       <ImageContainer>
-        <Image src={product.imageURL} width={520} height={480} alt="" />
+        <Image
+          src={product.imageURL}
+          priority={true}
+          width={520}
+          height={480}
+          alt=""
+        />
       </ImageContainer>
       <ProductDetails>
         <h1>{product.name}</h1>
@@ -59,7 +67,7 @@ export default function Product({ product }: ProductProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { id: "" } }],
+    paths: [{ params: { id: "prod_Nuddo20RdiM6bk" } }],
     fallback: true,
   };
 };
