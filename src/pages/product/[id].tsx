@@ -6,10 +6,10 @@ import {
   ImageContainer,
 } from "../../styles/pages/product";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import handler from "../api/checkout";
 import axios from "axios";
+import { useState } from "react";
 
 interface ProductProps {
   product: {
@@ -23,42 +23,60 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+
   async function handleBuyProduct() {
     try {
+      setIsCreatingCheckoutSession(true);
       const response = await axios.post("/api/checkout", {
-        priceID: product.defaultPriceID,
+        priceId: product.defaultPriceID,
       });
       const { checkoutUrl } = response.data;
       window.location.href = checkoutUrl;
     } catch (err) {
       //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
+      setIsCreatingCheckoutSession(false);
       alert("Falha em redirecionar ao checkout!");
     }
   }
-  const { isFallback } = useRouter();
-
-  if (isFallback) {
-    return <p>Loading...</p>;
+  if (!product) {
+    return <div>loading</div>;
   }
-
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageURL} width={520} height={480} alt="" />
-      </ImageContainer>
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
-        <p>{product.description}</p>
-        <button onClick={handleBuyProduct}>Comprar agora</button>
-      </ProductDetails>
-    </ProductContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
+      <ProductContainer>
+        <ImageContainer>
+          <Image
+            src={product.imageURL}
+            priority={true}
+            width={520}
+            height={480}
+            alt=""
+          />
+        </ImageContainer>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+          <p>{product.description}</p>
+          <button
+            disabled={isCreatingCheckoutSession}
+            onClick={handleBuyProduct}
+          >
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { id: "prod_Nudcm69NDdk2HJ" } }],
+    paths: [{ params: { id: "prod_Nuddo20RdiM6bk" } }],
     fallback: true,
   };
 };
