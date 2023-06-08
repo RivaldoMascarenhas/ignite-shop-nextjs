@@ -9,7 +9,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "../context/provider";
 
 interface ProductProps {
   product: {
