@@ -7,6 +7,7 @@ import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Stripe from "stripe";
 import Link from "next/link";
+import Cart from "./cart";
 interface HomeProps {
   products: {
     id: string;
@@ -24,6 +25,7 @@ export default function Home({ products }: HomeProps) {
   });
   return (
     <>
+      <Cart></Cart>
       <Head>
         <title>Ignite Shop</title>
       </Head>
