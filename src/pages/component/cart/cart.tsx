@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { AnimatePresence } from "framer-motion";
 import {
   CartItem,
@@ -7,6 +7,8 @@ import {
   CartTitle,
   RemoveButton,
 } from "./style";
+import { CartContext } from "../../context/provider";
+import Image from "next/image";
 
 interface Item {
   id: number;
@@ -16,24 +18,21 @@ interface Item {
 }
 
 function Cart() {
-  const [cartItems, setCartItems] = useState<Item[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartItems, setCartItems, isCartOpen, setIsCartOpen } =
+    useContext(CartContext);
+
   const cartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
+      setCartItems([...cartItems, JSON.parse(storedCartItems)]);
     }
-  }, []);
+  }, [cartItems, setCartItems]);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
-
-  const addItemToCart = (item: Item) => {
-    setCartItems([...cartItems, item]);
-  };
 
   const removeItemFromCart = (item: Item) => {
     const updatedCartItems = cartItems.filter(
@@ -74,7 +73,7 @@ function Cart() {
               <CartList>
                 {cartItems.map((item) => (
                   <CartItem key={item.id}>
-                    <img src={item.imageUrl} alt={item.name} />
+                    <Image src={item.imageUrl} alt={item.name} />
                     {item.name} - Quantidade: {item.quantity}
                     <RemoveButton
                       onClick={() => removeItemFromCart(item)}
