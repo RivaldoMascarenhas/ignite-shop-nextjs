@@ -11,39 +11,19 @@ import { CartContext } from "../../context/provider";
 import Image from "next/image";
 
 interface Item {
-  id: number;
+  id: string;
   name: string;
-  quantity: number;
-  imageUrl: string;
+  imageURL: string;
+  price: string;
+  description: string;
+  defaultPriceID: string;
 }
 
 function Cart() {
-  const { cartItems, setCartItems, isCartOpen, setIsCartOpen } =
+  const { cartItems, removeItemFromCart, isCartOpen, toggleCart } =
     useContext(CartContext);
 
   const cartRef = useRef<HTMLDivElement>(null);
-  console.log(cartItems);
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    if (storedCartItems) {
-      setCartItems((item) => [...item, JSON.parse(storedCartItems)]);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, []);
-
-  const removeItemFromCart = (item: Item) => {
-    const updatedCartItems = cartItems.filter(
-      (cartItem) => cartItem.id !== item.id
-    );
-    setCartItems(updatedCartItems);
-  };
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
 
   useEffect(() => {
     if (isCartOpen) {
@@ -67,14 +47,14 @@ function Cart() {
             tabIndex={-1}
           >
             <CartTitle>Carrinho de Compras</CartTitle>
-            {cartItems.length === 0 ? (
+            {cartItems?.length === 0 ? (
               <p>O carrinho está vazio.</p>
             ) : (
               <CartList>
-                {cartItems.map((item) => (
+                {cartItems?.map((item) => (
                   <CartItem key={item.id}>
-                    <Image src={item.imageUrl} alt={item.name} />
-                    {item.name} - Quantidade: {item.quantity}
+                    <Image src={item.imageURL} alt={item.name} />
+                    {item.name} - Preço: {item.price}
                     <RemoveButton
                       onClick={() => removeItemFromCart(item)}
                       aria-label="Remover item"
