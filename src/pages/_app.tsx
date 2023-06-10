@@ -12,13 +12,13 @@ globalStyles();
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Container>
-      <Header>
-        <Cart />
-        <Link href={"/"}>
-          <Image src={logoImg} alt="" />
-        </Link>
-      </Header>
       <CartProvider>
+        <Header>
+          <Cart />
+          <Link href={"/"}>
+            <Image src={logoImg} alt="" />
+          </Link>
+        </Header>
         <Component {...pageProps} />
       </CartProvider>
     </Container>

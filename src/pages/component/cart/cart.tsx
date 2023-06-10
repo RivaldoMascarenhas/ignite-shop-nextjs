@@ -22,17 +22,17 @@ function Cart() {
     useContext(CartContext);
 
   const cartRef = useRef<HTMLDivElement>(null);
-
+  console.log(cartItems);
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
-      setCartItems([...cartItems, JSON.parse(storedCartItems)]);
+      setCartItems((item) => [...item, JSON.parse(storedCartItems)]);
     }
-  }, [cartItems, setCartItems]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, []);
 
   const removeItemFromCart = (item: Item) => {
     const updatedCartItems = cartItems.filter(

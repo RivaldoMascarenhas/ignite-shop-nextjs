@@ -11,10 +11,10 @@ interface Item {
 }
 interface ProductProps {
   cartItems: Item[];
-  setCartItems: (i: Item[]) => void;
+  setCartItems: React.Dispatch<React.SetStateAction<Item[]>>;
   addItemToCart: ({}) => void;
   isCartOpen: boolean;
-  setIsCartOpen: (V: boolean) => void;
+  setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CartContext = createContext({} as ProductProps);
