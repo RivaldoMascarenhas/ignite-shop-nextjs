@@ -9,7 +9,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "../context/provider";
 
 interface ProductProps {
   product: {
@@ -25,6 +26,7 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
+  const { addItemToCart } = useContext(CartContext);
 
   async function handleBuyProduct() {
     try {
@@ -64,9 +66,11 @@ export default function Product({ product }: ProductProps) {
           <p>{product.description}</p>
           <button
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
+            onClick={() => {
+              addItemToCart(product);
+            }}
           >
-            Comprar agora
+            Add Cart Shopping
           </button>
         </ProductDetails>
       </ProductContainer>
