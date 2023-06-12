@@ -28,20 +28,20 @@ export default function Product({ product }: ProductProps) {
     useState(false);
   const { addItemToCart } = useContext(CartContext);
 
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true);
-      const response = await axios.post("/api/checkout", {
-        priceId: product.defaultPriceID,
-      });
-      const { checkoutUrl } = response.data;
-      window.location.href = checkoutUrl;
-    } catch (err) {
-      //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
-      setIsCreatingCheckoutSession(false);
-      alert("Falha em redirecionar ao checkout!");
-    }
-  }
+  // async function handleBuyProduct() {
+  //   try {
+  //     setIsCreatingCheckoutSession(true);
+  //     const response = await axios.post("/api/checkout", {
+  //       priceId: product.defaultPriceID,
+  //     });
+  //     const { checkoutUrl } = response.data;
+  //     window.location.href = checkoutUrl;
+  //   } catch (err) {
+  //     //Conectar com uma ferramenta de observabilidade(Datadog/ Sentry)
+  //     setIsCreatingCheckoutSession(false);
+  //     alert("Falha em redirecionar ao checkout!");
+  //   }
+  // }
   if (!product) {
     return <div>loading</div>;
   }

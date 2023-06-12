@@ -29,7 +29,13 @@ export default function CartProvider({ children }: CartProviderProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addItemToCart = (item: Item) => {
-    setCartItems((state) => [...state, item]);
+    if (
+      cartItems.some((Value) => {
+        Value.id !== item.id;
+      })
+    ) {
+      setCartItems((state) => [...state, item]);
+    }
   };
   useEffect(() => {
     if (cartItems.length > 0) {
@@ -53,6 +59,9 @@ export default function CartProvider({ children }: CartProviderProps) {
     const updatedCartItems = cartItems.filter(
       (cartItem) => cartItem.id !== item.id
     );
+    if (updatedCartItems.length === 0) {
+      localStorage.removeItem("cartItems");
+    }
     setCartItems(updatedCartItems);
   };
 

@@ -20,10 +20,14 @@ export const CartTitle = styled("h2", {
 export const CartList = styled("ul", {
   listStyle: "none",
   padding: 0,
+  display: "flex",
+  flexDirection: "column",
+  gap: "2rem",
 });
 
 export const CartItem = styled("li", {
   marginBottom: "10px",
+  color: "Black",
 });
 
 export const RemoveButton = styled("button", {

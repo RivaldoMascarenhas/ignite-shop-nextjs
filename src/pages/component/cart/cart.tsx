@@ -51,13 +51,13 @@ function Cart() {
               <p>O carrinho está vazio.</p>
             ) : (
               <CartList>
-                {cartItems?.map((item) => (
+                {cartItems?.map((item: Item) => (
                   <CartItem key={item.id}>
                     <Image
                       src={item?.imageURL}
                       alt={item.name}
-                      width={500}
-                      height={400}
+                      width={200}
+                      height={150}
                     />
                     {item.name} - Preço: {item.price}
                     <RemoveButton
