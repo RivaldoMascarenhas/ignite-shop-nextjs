@@ -7,6 +7,11 @@ import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Stripe from "stripe";
 import Link from "next/link";
+import { CartButton } from "./component/cart/style";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { useContext } from "react";
+import { CartContext } from "./context/provider";
+
 interface HomeProps {
   products: {
     id: string;
@@ -22,6 +27,7 @@ export default function Home({ products }: HomeProps) {
       spacing: 48,
     },
   });
+  const { addItemToCart, notify } = useContext(CartContext);
   return (
     <>
       <Head>
@@ -30,24 +36,33 @@ export default function Home({ products }: HomeProps) {
       <HomeContainer ref={slideRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <Link
-              key={product?.id}
-              href={`/product/${product?.id}`}
-              prefetch={false}
-            >
+            <div key={product?.id}>
               <Product className="keen-slider__slide">
-                <Image
-                  src={product?.imageURL}
-                  width={520}
-                  height={480}
-                  alt=""
-                />
+                <Link href={`/product/${product?.id}`} prefetch={false}>
+                  <Image
+                    src={product?.imageURL}
+                    width={520}
+                    height={480}
+                    alt=""
+                  />
+                </Link>
                 <footer>
-                  <strong>{product?.name}</strong>
-                  <span>{product?.price}</span>
+                  <Link href={`/product/${product?.id}`} prefetch={false}>
+                    <strong>{product?.name}</strong>
+                    <span>{product?.price}</span>
+                  </Link>
+                  <CartButton
+                    Background={"Green"}
+                    Cursor={"pointer"}
+                    onClick={() => {
+                      addItemToCart(product);
+                    }}
+                  >
+                    <HiOutlineShoppingBag size={24} color="white" />
+                  </CartButton>
                 </footer>
               </Product>
-            </Link>
+            </div>
           );
         })}
       </HomeContainer>

@@ -5,10 +5,17 @@ import {
   CartList,
   CartSidebar,
   CartTitle,
+  ImageContainerCart,
   RemoveButton,
+  InfoCart,
+  CartButton,
+  Notification,
+  Close,
 } from "./style";
 import { CartContext } from "../../context/provider";
 import Image from "next/image";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { AiOutlineClose } from "react-icons/Ai";
 
 interface Item {
   id: string;
@@ -33,9 +40,14 @@ function Cart() {
 
   return (
     <div>
-      <button onClick={toggleCart}>
-        {isCartOpen ? "Fechar Carrinho" : "Abrir Carrinho"}
-      </button>
+      <div>
+        <CartButton onClick={toggleCart}>
+          <HiOutlineShoppingBag size={24} color="white" />
+          {cartItems.length > 0 && (
+            <Notification>{cartItems.length}</Notification>
+          )}
+        </CartButton>
+      </div>
       <AnimatePresence>
         {isCartOpen && (
           <CartSidebar
@@ -46,26 +58,37 @@ function Cart() {
             ref={cartRef}
             tabIndex={-1}
           >
-            <CartTitle>Carrinho de Compras</CartTitle>
+            <CartTitle>Sacola Compras</CartTitle>
+            <Close onClick={toggleCart}>
+              <AiOutlineClose fontSize={24} />
+            </Close>
+
             {cartItems?.length === 0 ? (
-              <p>O carrinho está vazio.</p>
+              <>
+                <p>Nada por aqui...</p>
+              </>
             ) : (
               <CartList>
                 {cartItems?.map((item: Item) => (
                   <CartItem key={item.id}>
-                    <Image
-                      src={item?.imageURL}
-                      alt={item.name}
-                      width={200}
-                      height={150}
-                    />
-                    {item.name} - Preço: {item.price}
-                    <RemoveButton
-                      onClick={() => removeItemFromCart(item)}
-                      aria-label="Remover item"
-                    >
-                      Remover
-                    </RemoveButton>
+                    <ImageContainerCart>
+                      <Image
+                        src={item?.imageURL}
+                        alt={item.name}
+                        width={100}
+                        height={100}
+                      />
+                    </ImageContainerCart>
+                    <InfoCart>
+                      <p>{item.name}</p>
+                      <span>Preço: {item.price}</span>
+                      <RemoveButton
+                        onClick={() => removeItemFromCart(item)}
+                        aria-label="Remover item"
+                      >
+                        Remover
+                      </RemoveButton>
+                    </InfoCart>
                   </CartItem>
                 ))}
               </CartList>

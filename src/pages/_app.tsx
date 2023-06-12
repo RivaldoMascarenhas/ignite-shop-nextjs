@@ -14,10 +14,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <Container>
       <CartProvider>
         <Header>
-          <Cart />
           <Link href={"/"}>
             <Image src={logoImg} alt="" />
           </Link>
+          <Cart />
         </Header>
         <Component {...pageProps} />
       </CartProvider>
