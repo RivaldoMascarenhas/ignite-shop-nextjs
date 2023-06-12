@@ -53,7 +53,12 @@ function Cart() {
               <CartList>
                 {cartItems?.map((item) => (
                   <CartItem key={item.id}>
-                    <Image src={item.imageURL} alt={item.name} />
+                    <Image
+                      src={item?.imageURL}
+                      alt={item.name}
+                      width={500}
+                      height={400}
+                    />
                     {item.name} - Preço: {item.price}
                     <RemoveButton
                       onClick={() => removeItemFromCart(item)}

@@ -7,7 +7,6 @@ import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Stripe from "stripe";
 import Link from "next/link";
-import Cart from "./cart";
 interface HomeProps {
   products: {
     id: string;
@@ -25,7 +24,6 @@ export default function Home({ products }: HomeProps) {
   });
   return (
     <>
-      <Cart></Cart>
       <Head>
         <title>Ignite Shop</title>
       </Head>
@@ -33,15 +31,20 @@ export default function Home({ products }: HomeProps) {
         {products.map((product) => {
           return (
             <Link
-              key={product.id}
-              href={`/product/${product.id}`}
+              key={product?.id}
+              href={`/product/${product?.id}`}
               prefetch={false}
             >
               <Product className="keen-slider__slide">
-                <Image src={product.imageURL} width={520} height={480} alt="" />
+                <Image
+                  src={product?.imageURL}
+                  width={520}
+                  height={480}
+                  alt=""
+                />
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <strong>{product?.name}</strong>
+                  <span>{product?.price}</span>
                 </footer>
               </Product>
             </Link>

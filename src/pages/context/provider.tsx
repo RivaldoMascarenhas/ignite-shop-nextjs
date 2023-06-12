@@ -29,21 +29,11 @@ export default function CartProvider({ children }: CartProviderProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addItemToCart = (item: Item) => {
-    setCartItems(cartItems.concat(item));
+    setCartItems((state) => [...state, item]);
   };
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [addItemToCart]);
-
-  useEffect(() => {
-    const cartLocal = localStorage.getItem("cartItems");
-    if (cartLocal === null) {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }
-    if (cartLocal?.length !== null) {
-      setCartItems(JSON.parse(cartLocal));
-    }
-  }, []);
+  }, [cartItems]);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
