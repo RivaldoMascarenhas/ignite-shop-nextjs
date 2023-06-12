@@ -12,7 +12,7 @@ import {
   Notification,
   Close,
 } from "./style";
-import { CartContext } from "../../context/provider";
+import { CartContext } from "../../pages/context/provider";
 import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/Ai";
@@ -26,7 +26,7 @@ interface Item {
   defaultPriceID: string;
 }
 
-function Cart() {
+export default function Cart() {
   const { cartItems, removeItemFromCart, isCartOpen, toggleCart } =
     useContext(CartContext);
 
@@ -99,5 +99,3 @@ function Cart() {
     </div>
   );
 }
-
-export default Cart;

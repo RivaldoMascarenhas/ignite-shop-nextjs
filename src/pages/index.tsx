@@ -7,7 +7,7 @@ import { stripe } from "../lib/stripe";
 import { GetStaticProps } from "next";
 import Stripe from "stripe";
 import Link from "next/link";
-import { CartButton } from "./component/cart/style";
+import { CartButton } from "../component/cart/style";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useContext } from "react";
 import { CartContext } from "./context/provider";

@@ -5,7 +5,7 @@ import logoImg from "../assets/logo-igniteshop.svg";
 import { Container, Header } from "../styles/pages/app";
 import Link from "next/link";
 import CartProvider from "./context/provider";
-import Cart from "./component/cart/cart";
+import Cart from "../component/cart/cart";
 
 globalStyles();
 
