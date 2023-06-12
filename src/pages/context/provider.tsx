@@ -32,8 +32,19 @@ export default function CartProvider({ children }: CartProviderProps) {
     setCartItems((state) => [...state, item]);
   };
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    if (cartItems.length > 0) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
   }, [cartItems]);
+
+  useEffect(() => {
+    const local = localStorage.getItem("cartItems");
+    if (local === null) {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    } else {
+      setCartItems(JSON.parse(local));
+    }
+  }, []);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
