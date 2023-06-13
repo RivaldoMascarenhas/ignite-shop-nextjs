@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 interface CartProviderProps {
   children: React.ReactNode;
 }
-interface Item {
+export interface Item {
   id: string;
   name: string;
   imageURL: string;
