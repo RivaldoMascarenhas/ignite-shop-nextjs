@@ -10,6 +10,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { CartContext } from "../context/provider";
+import { useRouter } from "next/router";
 
 interface ProductProps {
   product: {
@@ -25,7 +26,8 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
-  const { addItemToCart, notify } = useContext(CartContext);
+  const { addItemToCart } = useContext(CartContext);
+  const { push } = useRouter();
 
   // async function handleBuyProduct() {
   //   try {
@@ -67,6 +69,7 @@ export default function Product({ product }: ProductProps) {
             disabled={isCreatingCheckoutSession}
             onClick={() => {
               addItemToCart(product);
+              push("/");
             }}
           >
             Colocar na Sacola
