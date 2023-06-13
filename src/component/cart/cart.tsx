@@ -58,7 +58,7 @@ export default function Cart() {
             ref={cartRef}
             tabIndex={-1}
           >
-            <CartTitle>Sacola Compras</CartTitle>
+            <CartTitle>Sacola Compras de Pão</CartTitle>
             <Close onClick={toggleCart}>
               <AiOutlineClose fontSize={24} />
             </Close>
