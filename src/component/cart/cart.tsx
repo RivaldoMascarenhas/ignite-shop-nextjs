@@ -12,19 +12,19 @@ import {
   Notification,
   Close,
 } from "./style";
-import { CartContext, Item } from "../../pages/context/provider";
+import { CartContext } from "../../pages/context/provider";
 import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 
-// interface Item {
-//   id: string;
-//   name: string;
-//   imageURL: string;
-//   price: string;
-//   description: string;
-//   defaultPriceID: string;
-// }
+interface Item {
+  id: string;
+  name: string;
+  imageURL: string;
+  price: string;
+  description: string;
+  defaultPriceID: string;
+}
 
 export default function Cart() {
   const { cartItems, removeItemFromCart, isCartOpen, toggleCart } =
