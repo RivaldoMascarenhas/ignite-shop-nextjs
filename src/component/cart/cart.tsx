@@ -15,7 +15,7 @@ import {
 import { CartContext } from "../../pages/context/provider";
 import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { AiOutlineClose } from "react-icons/Ai";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface Item {
   id: string;
