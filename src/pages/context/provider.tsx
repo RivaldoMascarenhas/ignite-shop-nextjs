@@ -21,7 +21,7 @@ interface ProductProps {
   setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
   removeItemFromCart: (item: Item) => void;
   toggleCart: () => void;
-  notify: () => void;
+  notify: (item: string) => void;
 }
 
 export const CartContext = createContext({} as ProductProps);
@@ -33,11 +33,11 @@ export default function CartProvider({ children }: CartProviderProps) {
   const addItemToCart = (item: Item) => {
     if (!cartItems.some((value) => value.id === item.id)) {
       setCartItems((state) => [...state, item]);
-      notify();
+      notify(item.name);
     }
   };
-  const notify = () =>
-    toast("Adicionado à Sacola", {
+  const notify = (item: string) =>
+    toast(`${item} - Adicionado`, {
       position: "top-right",
       autoClose: 2000,
       hideProgressBar: false,
